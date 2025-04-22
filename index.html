@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Bento grid</title>
+
+  <style>
+    @font-face {
+      font-family: 'DM Sans';
+      src: url('./assets/fonts/DMSans-VariableFont_opsz,wght.ttf') format('truetype');
+      font-weight: 400 500;
+      font-display: swap;
+    }
+    :root {
+      --purple-100: hsl(254, 88%, 90%);
+      --purple-500: hsl(256, 67%, 59%);
+      --yellow-100: hsl(31, 66%, 93%);
+      --yellow-500: hsl(39, 100%, 71%);
+      --white: hsl(0, 0%, 100%);
+      --black: hsl(0, 0%, 7%);
+      --peach: var(--yellow-100);
+      --lavender: var(--purple-100);
+      --font-main: 'DM Sans', Arial, sans-serif;
+    }
+    body {
+      background: var(--white);
+      font-family: var(--font-main);
+      color: var(--black);
+      margin: 0;
+      padding: 0;
+      font-size: 18px; 
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(3, minmax(180px, auto));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 24px;
+    }
+    .bento {
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .bento--tall { grid-row: span 2; }
+    .bento--wide { grid-column: span 2; }
+    .bento--peach { background: var(--peach); }
+    .bento--yellow { background: var(--yellow-500); }
+    .bento--purple { background: var(--purple-500); color: var(--white); }
+    .bento--lavender { background: var(--lavender); }
+    .bento--white { background: var(--white); }
+    .bento h1, .bento h2, .bento h3 {
+      font-weight: 500;
+    }
+    .bento .accent {
+      color: var(--purple-500);
+      font-weight: 500;
+    }
+    .bento--purple .accent {
+      color: var(--yellow-500);
+    }
+    .bento-btn {
+      background: var(--yellow-500);
+      color: var(--black);
+      border: none;
+      border-radius: 24px;
+      padding: 12px 32px;
+      font-size: 1rem;
+      font-family: inherit;
+      font-weight: 500;
+      margin-top: 24px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+    }
+    .bento-btn:hover { background: var(--yellow-100); }
+    .bento-btn img {
+      width: 18px;
+      height: 18px;
+      margin-left: 8px;
+    }
+    .stars {
+      font-size: 1.5rem;
+      margin-top: 16px;
+      text-align: center;
+    }
+    .stars img {
+      width: 22px;
+      height: 22px;
+      margin: 0 2px;
+      vertical-align: middle;
+    }
+    .stars p {
+      font-size: 1rem;
+      margin: 8px 0 0 0;
+      color: var(--white);
+    }
+    .bento-illustration {
+      width: 100%;
+      max-width: 180px;
+      margin: 0 auto 16px auto;
+      display: block;
+    }
+    .bento-chart {
+      margin-top: 16px;
+      text-align: center;
+    }
+    .bento-chart img {
+      width: 100%;
+      max-width: 160px;
+      margin: 0 auto 8px auto;
+      display: block;
+    }
+    .bento-chat {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .chat-bubble {
+      background: var(--white);
+      color: var(--black);
+      border-radius: 16px;
+      padding: 12px 16px;
+      max-width: 80%;
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chat-bubble.user {
+      align-self: flex-start;
+      background: var(--yellow-100);
+    }
+    .chat-bubble.ai {
+      align-self: flex-end;
+      background: var(--purple-100);
+    }
+    .bento-arrow {
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
+      background: var(--yellow-500);
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .bento-arrow img {
+      width: 24px;
+      height: 24px;
+    }
+    .bento-accounts {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .account {
+      background: var(--purple-100);
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .account img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+    .bento-schedule {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      align-items: center;
+    }
+    .bento-schedule span {
+      background: var(--purple-100);
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 0.95rem;
+    }
+    .bento-schedule img {
+      width: 100%;
+      max-width: 120px;
+      margin-left: 8px;
+    }
+    .bento-avatars {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      align-items: center;
+    }
+    .avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--purple-100);
+      border-radius: 50%;
+      display: inline-block;
+      object-fit: cover;
+      border: 2px solid var(--white);
+    }
+    .bento-growth {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 16px;
+      align-items: flex-end;
+    }
+    .bento-growth p {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--white);
+    }
+    .bento-growth h2 {
+      margin: 4px 0 0 0;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--white);
+    }
+    .bento-growth .up {
+      color: var(--yellow-500);
+      font-size: 1rem;
+      margin-left: 8px;
+    }
+    .bento-growth img {
+      width: 100%;
+      max-width: 140px;
+      margin-top: 8px;
+      border-radius: 12px;
+      background: var(--white);
+    }
+    @media (max-width: 900px) {
+      .bento-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: none;
+      }
+      .bento--wide { grid-column: span 2; }
+      .bento--tall { grid-row: span 1; }
+    }
+    @media (max-width: 600px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 8px;
+      }
+      .bento {
+        padding: 20px 12px;
+      }
+      .bento--wide, .bento--tall {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+      margin: 32px 0 0 0;
+    }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+  <main class="bento-grid">
+    <!-- Create and schedule content quicker -->
+    <section class="bento bento--tall bento--peach">
+      <img src="./assets/images/illustration-create-post.webp" alt="" class="bento-illustration" />
+      <h2>Create and schedule content <span class="accent">quicker.</span></h2>
+      <button class="bento-btn">
+        Create Post
+        <img src="./assets/images/illustration-create-post.webp" alt="Arrow" style="width:20px;height:20px;">
+      </button>
+    </section>
+    <!-- Social Media 10x Faster with AI -->
+    <section class="bento bento--wide bento--purple">
+      <h1>Social Media <span class="accent">10x</span><br>Faster with AI</h1>
+      <img src="./assets/images/illustration-five-stars.webp" alt="5 stars" class="bento-illustration" style="max-width:120px;margin-bottom:0;">
+      <p style="text-align:center;margin:8px 0 0 0;">Over 4,000 5-star reviews</p>
+    </section>
+    <!-- Schedule to social media -->
+    <section class="bento bento--tall bento--lavender">
+      <h3>Schedule to social media.</h3>
+      <img src="./assets/images/illustration-schedule-posts.webp" alt="Schedule chart" class="bento-illustration" style="max-width:140px;">
+      <small>Optimize post timings to publish content at the perfect time for your audience.</small>
+    </section>
+    <!-- Write your content using AI -->
+    <section class="bento bento--yellow">
+      <h3>Write your content using <span class="accent">AI.</span></h3>
+      <img src="./assets/images/illustration-ai-content.webp" alt="AI content" class="bento-illustration" style="max-width:120px;">
+    </section>
+    <!-- Manage multiple accounts and platforms -->
+    <section class="bento bento--white">
+      <h3>Manage multiple accounts and platforms.</h3>
+      <img src="./assets/images/illustration-multiple-platforms.webp" alt="Multiple platforms" class="bento-illustration" style="max-width:120px;">
+    </section>
+    <!-- Maintain a consistent posting schedule -->
+    <section class="bento bento--yellow">
+      <h3>Maintain a consistent posting schedule.</h3>
+      <img src="./assets/images/illustration-consistent-schedule.webp" alt="Consistent schedule" class="bento-illustration" style="max-width:120px;">
+    </section>
+    <!-- Faster audience growth -->
+    <section class="bento bento--white">
+      <h3>
+        <span style="display:block;font-size:2.5rem;font-weight:700;line-height:1;">&gt;56%</span>
+        <span style="display:block;font-size:1.1rem;font-weight:400;margin-top:8px;">faster audience growth</span>
+      </h3>
+      <img src="./assets/images/illustration-audience-growth.webp" alt="Audience growth" class="bento-illustration" style="max-width:120px;">
+    </section>
+    <!-- Grow followers with non-stop content -->
+    <section class="bento bento--wide bento--purple">
+      <img src="./assets/images/illustration-grow-followers.webp" alt="Grow followers" class="bento-illustration" style="max-width:180px;">
+      <h3 style="margin-top:16px;">Grow followers with non-stop content.</h3>
+    </section>
+  </main>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
+    Coded by <a href="#">Alex Gachugu Kanyi</a>.
+  </div>
+</body>
+</html>
